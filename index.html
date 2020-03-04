@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+  </head>
+<style>
+  body {
+    background: 'white';
+  }
+
+  #canvas {
+    margin-left: 10px;
+    margin-top: 10px;
+    background: rgb(0, 0, 0);;
+    border: thin solid #aaaaaa;
+  }
+
+  #glasspane {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    padding: 0px 20px 20px 20px;
+    background: rgba(0, 23, 156, 0.3);
+    border: thin solid rgba(0, 0, 0, 0.6);
+    color: #eeeeee;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 22px;
+    cursor: pointer;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.5) 5px 5px 20px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.5) 5px 5px 20px;
+    box-shadow: rgba(0, 0, 0, 0.5) 5px 5px 20px;
+  }
+
+  #glasspane h2 {
+    font-weight: normal;
+  }
+
+  #glasspane .title {
+    font-weight: bold;
+    font-size: 2em;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  #glasspane a:hover {
+    color: yellow;
+  }
+
+  #glasspane a {
+    text-decoration: none;
+    color: #cccccc;
+    font-size: 3.5em;
+  }
+
+  #glasspane p {
+    margin: 0px;
+    color: rgb(255, 255, 255);
+    font-size: 18pt;
+    font-family: 'Courier New', Courier, monospace;
+  }
+</style>
+<canvas id="canvas"></canvas>
+<script type="module" src="./psych/psych.mjs"></script>
+<div id='glasspane'>
+  <h2 class='title'>CONTROLS</h2>
+  <p><pre>'a'       decrease speed</pre></p>
+  <p><pre>'d'       increase speed</pre></p>
+  <p><pre>'w'       increase size</pre></p>
+  <p><pre>'s'       decrease size</pre></p>
+  <p><pre>'space'   hide controls</pre></p>
+</div>
+</body>
+
+</html>
