@@ -10536,7 +10536,7 @@ button:focus {
     height: 100%
 }
 
-#play-menu {
+.play-menu {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -10550,11 +10550,11 @@ button:focus {
     text-align: center
 }
 
-#play-menu p {
+.play-menu p {
     margin-bottom: 0
 }
 
-#play-menu input {
+.play-menu input {
     font-size: 18px;
     outline: none;
     border: none;
@@ -10564,7 +10564,7 @@ button:focus {
     text-align: center
 }
 
-#play-menu input:hover {
+.play-menu input:hover {
     outline: none
 }
 
@@ -10610,7 +10610,11 @@ button:focus {
     h2 {
         font-size: 1.75rem
     }
-    #play-menu {
+    .play-menu {
+        padding: 10px 15px;
+        min-width: 280px
+    }
+    #controls {
         padding: 10px 15px;
         min-width: 280px
     }

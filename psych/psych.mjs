@@ -44,14 +44,14 @@ var draw_text = function (text_arr) {
     }
 }
 
-/****************************  CREATE A FILLED CIRCLE  ****************************/
-
 var toggle_controls = () => {
-    var x = document.getElementById("glasspane");
-    if (x.style.display === "none") {
-        x.style.display = "block";
+    var x = document.getElementById('controls');
+    console.log(x.className);
+    if (x.className === "hidden") {
+        x.className = "play-menu";
+        running = false;
     } else {
-        x.style.display = "none";
+        x.className = "hidden";
     }
 }
 
@@ -81,7 +81,7 @@ var update = function () {
         }
     }
     if (!running) {
-        if (movement.click) {
+        if (movement.click && collision.detect_cir(mouse,target)) {
             running = true;
         }
     }
@@ -103,9 +103,10 @@ var run = () => {
     requestAnimationFrame(run);
     context.clearRect(0, 0, canvas.width, canvas.height);
     data.length = 0;
-    data.push("x: " + movement.mousex + ", y: " + movement.mousey);
     success_bar.draw(context);
     target.draw(context);
+    data.push("Click inside circle to start.");
+    data.push("Press space to pause/show controls.");
     draw_text(data);
     update();
     if (running) {

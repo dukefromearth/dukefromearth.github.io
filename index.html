@@ -26,52 +26,10 @@
       ;
       border: thin solid #aaaaaa;
     }
-
-    #glasspane {
-      display: none;
-      position: absolute;
-      left: 60px;
-      top: 20px;
-      padding: 0px 20px 20px 20px;
-      background: rgba(159, 174, 255, 0.3);
-      color: #eeeeee;
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 22px;
-      cursor: pointer;
-      -webkit-box-shadow: rgba(255, 255, 255, 0.5) 5px 5px 20px;
-      -moz-box-shadow: rgba(255, 255, 255, 0.5) 5px 5px 20px;
-      box-shadow: rgba(255, 255, 255, 0.5) 5px 5px 20px;
-    }
-
-    #glasspane h2 {
-      font-weight: normal;
-    }
-
-    #glasspane .title {
-      font-weight: bold;
-      font-size: 2em;
-      color: rgba(255, 255, 255, 0.8);
-    }
-
-    #glasspane a:hover {
-      color: yellow;
-    }
-
-    #glasspane a {
-      text-decoration: none;
-      color: rgb(255, 255, 255);;
-      font-size: 3.5em;
-    }
-
-    #glasspane p {
-      margin: 0px;
-      color: rgb(255, 0, 0);
-      font-size: 18pt;
-      font-family: 'Courier New', Courier, monospace;
-    }
+    
   </style>
 
-  <div id="play-menu">
+  <div id="play-menu" class="play-menu">
     <h1>Enter Data</h1>
     <!-- <p>Shape
       <input type="text" id="shape-input" placeholder="circle, square or img" />
@@ -88,8 +46,8 @@
     <button id="play-button">PLAY</button>
   </div>
 
-  <div id='glasspane'>
-    <h2 class='play'>CONTROLS</h2>
+  <div id='controls' class="hidden">
+    <h2>CONTROLS</h2>
     <p>
       <pre>'a'       decrease speed</pre>
     </p>

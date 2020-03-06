@@ -13,7 +13,7 @@ export default class Success_bar{
             };
         }
         else {
-            if (this.slider.y <= this.max_height - this.slider.height) this.slider.y+=1;
+            if (this.slider.y <= this.max_height - this.slider.height) this.slider.y+=2;
         }
     }
     draw(context){
