@@ -9,7 +9,7 @@ var play_menu = document.getElementById('play-menu');
 var runtime_input = document.getElementById('runtime-input');
 var size_input = document.getElementById('size-input');
 var speed_input = document.getElementById('speed-input');
-var color_input = document.getElementById('color-input');
+var show_reward_input = document.getElementById('show-reward-input');
 var controls = document.getElementById('controls');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
@@ -21,6 +21,7 @@ var collision = new Collision();
 var data = [];
 var target = {};
 var running = false;
+var show_reward = false;
 var task2_circles = [];
 
 var debounce_keys = {
@@ -61,7 +62,6 @@ var toggle_controls = () => {
 }
 
 var check_if_times_up = () => {
-    console.log(Date.now() - target.start_time, runtime_input*1000)
     if(Date.now() - target.start_time > runtime_input*1000 && target.start_time > 0){
         return true;
     }
@@ -129,10 +129,9 @@ var run = () => {
         return;
     }
     requestAnimationFrame(run);
-    
     context.clearRect(0, 0, canvas.width, canvas.height);
     data.length = 0;
-    success_bar.draw(context);
+    if(show_reward) success_bar.draw(context);
     target.draw(context);
     data.push("Press space to pause/show controls.");
     draw_text(data);
@@ -162,11 +161,16 @@ var stop = () => {
 }
 
 var run2 = () => {
+    if(check_if_times_up()) {
+        window.cancelAnimationFrame(run2);
+        stop();
+        return;
+    }
     requestAnimationFrame(run2);
     target.speed = Date.now() - target.time;
     context.clearRect(0, 0, canvas.width, canvas.height);
     data.length = 0;
-    success_bar.draw(context);
+    if(show_reward) success_bar.draw(context);
     target.draw(context);
     data.push("Press space to pause/show controls.");
     data.push(("Time left: " + (target.max_time - target.speed) / 1000));
@@ -196,6 +200,7 @@ task1_button.addEventListener('click', function () {
     canvas.style.display = 'block';
     play_menu.style.display = 'none';
     runtime_input = parseInt(runtime_input.value);
+    if(show_reward_input.value === 'yes') show_reward = true;
     let size = parseInt(size_input.value) || 30;
     let spd = parseInt(speed_input.value) || 2;
     let task = 1;
@@ -208,6 +213,7 @@ task2_button.addEventListener('click', function () {
     canvas.style.display = 'block';
     play_menu.style.display = 'none';
     runtime_input = parseInt(runtime_input.value);
+    if(show_reward_input.value === 'yes') show_reward = true;
     let size = parseInt(size_input.value) || 30;
     let spd = parseFloat(speed_input.value) * 1000 || 2000;
     let task = 2;
