@@ -11,7 +11,9 @@ export default class Target {
         this.pt1 = pt1;
         this.pt2 = pt2;
         this.speed = speed;
-        this.task = task; //
+        this.task = task;
+        this.time = 0;
+        this.max_time = speed;
     }
     translate(x, y) {
         this.x += x;

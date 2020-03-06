@@ -91,7 +91,8 @@ var update = function () {
             controls.className = "hidden";
             target.x = Math.random() * canvas.width - 40 + 20;
             target.y = Math.random() * canvas.height - 40 + 20;
-            success_bar.update(-100);
+            success_bar.update(-canvas.height/50);
+            target.time = Date.now();
         }
     }
 }
@@ -119,11 +120,11 @@ var run = () => {
     update();
     if (running) {
         if (collision.detect_cir(target, mouse)) {
-            success_bar.update(-2);
+            success_bar.update(-canvas.height/1000);
             target.col = 'green';
         }
         else {
-            success_bar.update(2);
+            success_bar.update(canvas.height/1000);
             target.col = 'red';
         }
         target.move();
@@ -132,17 +133,23 @@ var run = () => {
 
 var run2 = () => {
     requestAnimationFrame(run2);
+    target.speed = Date.now() - target.time;
     context.clearRect(0, 0, canvas.width, canvas.height);
     data.length = 0;
     success_bar.draw(context);
     target.draw(context);
     data.push("Press space to pause/show controls.");
-    draw_text(data);
+    data.push(("Time left: " + (target.max_time - target.speed)/1000));
     update();
     if (running) {
         {
-            success_bar.update(2);
-            target.col = 'red';
+            draw_text(data);
+            if (target.speed >= target.max_time){
+                target.x = Math.random() * canvas.width - 40 + 20;
+                target.y = Math.random() * canvas.height - 40 + 20;
+                success_bar.update(canvas.height/50);
+                target.time = Date.now();
+            }
         }
     }
 }
@@ -170,7 +177,7 @@ task2_button.addEventListener('click', function () {
     canvas.style.display = 'block';
     play_menu.style.display = 'none';
     let size = parseInt(size_input.value) || 30;
-    let spd = parseInt(speed_input.value) || 2;
+    let spd = parseFloat(speed_input.value)*1000 || 2000;
     let task = 2;
     create_circle(size, spd, task);
     toggle_controls();
