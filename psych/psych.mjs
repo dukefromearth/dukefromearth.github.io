@@ -6,7 +6,7 @@ import Collision from './collisions.mjs';
 var task1_button = document.getElementById('task1-button');
 var task2_button = document.getElementById('task2-button');
 var play_menu = document.getElementById('play-menu');
-var shape_input = document.getElementById('shape-input');
+var runtime_input = document.getElementById('runtime-input');
 var size_input = document.getElementById('size-input');
 var speed_input = document.getElementById('speed-input');
 var color_input = document.getElementById('color-input');
@@ -37,6 +37,10 @@ var mouse = {
     r: 1
 }
 
+var between = (min, max) => {
+    return Math.random() * (max - min) + min;
+}
+
 var draw_text = function (text_arr) {
     context.fillStyle = 'white';
     context.font = "20px Ariel";
@@ -54,6 +58,14 @@ var toggle_controls = () => {
     } else {
         controls.className = "hidden";
     }
+}
+
+var check_if_times_up = () => {
+    console.log(Date.now() - target.start_time, runtime_input*1000)
+    if(Date.now() - target.start_time > runtime_input*1000 && target.start_time > 0){
+        return true;
+    }
+    return false;
 }
 
 var update = function () {
@@ -85,13 +97,14 @@ var update = function () {
         if (movement.click && collision.detect_cir(mouse, target)) {
             controls.className = "hidden";
             running = true;
+            target.start_time = Date.now();
         }
     } else {
         if (movement.click && collision.detect_cir(mouse, target) && target.task === 2) {
             controls.className = "hidden";
-            target.x = Math.random() * canvas.width - 40 + 20;
-            target.y = Math.random() * canvas.height - 40 + 20;
-            success_bar.update(-canvas.height/50);
+            target.x = between(100, canvas.width - 100);
+            target.y = between(100, canvas.height - 100);
+            success_bar.update(-canvas.height / 50);
             target.time = Date.now();
         }
     }
@@ -110,7 +123,13 @@ class Data {
 }
 
 var run = () => {
+    if(check_if_times_up()) {
+        window.cancelAnimationFrame(run);
+        stop();
+        return;
+    }
     requestAnimationFrame(run);
+    
     context.clearRect(0, 0, canvas.width, canvas.height);
     data.length = 0;
     success_bar.draw(context);
@@ -120,15 +139,26 @@ var run = () => {
     update();
     if (running) {
         if (collision.detect_cir(target, mouse)) {
-            success_bar.update(-canvas.height/1000);
+            success_bar.update(-canvas.height / 1000);
             target.col = 'green';
         }
         else {
-            success_bar.update(canvas.height/1000);
+            success_bar.update(canvas.height / 1000);
             target.col = 'red';
         }
         target.move();
     }
+}
+
+var stop = () => {
+    requestAnimationFrame(stop);
+    context.save();
+    // context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = 'white';
+    var time_up = "TIME IS UP!";
+    var width = context.measureText(time_up).width;
+    context.fillText(time_up, canvas.width/2 - width/2, canvas.height/2);
+    context.restore();
 }
 
 var run2 = () => {
@@ -139,15 +169,15 @@ var run2 = () => {
     success_bar.draw(context);
     target.draw(context);
     data.push("Press space to pause/show controls.");
-    data.push(("Time left: " + (target.max_time - target.speed)/1000));
+    data.push(("Time left: " + (target.max_time - target.speed) / 1000));
     update();
     if (running) {
         {
             draw_text(data);
-            if (target.speed >= target.max_time){
-                target.x = Math.random() * canvas.width - 40 + 20;
-                target.y = Math.random() * canvas.height - 40 + 20;
-                success_bar.update(canvas.height/50);
+            if (target.speed >= target.max_time) {
+                target.x = between(100, canvas.width - 100);
+                target.y = between(100, canvas.height - 100);
+                success_bar.update(canvas.height / 50);
                 target.time = Date.now();
             }
         }
@@ -155,16 +185,17 @@ var run2 = () => {
 }
 
 var create_circle = (r, spd, task) => {
-    let x = Math.random() * canvas.width - 40 + 20;
-    let y = Math.random() * canvas.height - 40 + 20;
-    let x2 = Math.random() * canvas.width - 40 + 20;
-    let y2 = Math.random() * canvas.height - 40 + 20;
+    let x = between(100, canvas.width - 100);
+    let y = between(100, canvas.height - 100);
+    let x2 = between(100, canvas.width - 100);
+    let y2 = between(100, canvas.height - 100);
     target = new Target(x, y, 'red', r, { x: x, y: y, r: 10 }, { x: x2, y: y2, r: 10 }, spd, task);
 }
 
 task1_button.addEventListener('click', function () {
     canvas.style.display = 'block';
     play_menu.style.display = 'none';
+    runtime_input = parseInt(runtime_input.value);
     let size = parseInt(size_input.value) || 30;
     let spd = parseInt(speed_input.value) || 2;
     let task = 1;
@@ -176,8 +207,9 @@ task1_button.addEventListener('click', function () {
 task2_button.addEventListener('click', function () {
     canvas.style.display = 'block';
     play_menu.style.display = 'none';
+    runtime_input = parseInt(runtime_input.value);
     let size = parseInt(size_input.value) || 30;
-    let spd = parseFloat(speed_input.value)*1000 || 2000;
+    let spd = parseFloat(speed_input.value) * 1000 || 2000;
     let task = 2;
     create_circle(size, spd, task);
     toggle_controls();

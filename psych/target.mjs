@@ -14,13 +14,13 @@ export default class Target {
         this.task = task;
         this.time = 0;
         this.max_time = speed;
+        this.start_time = 0;
     }
     translate(x, y) {
         this.x += x;
         this.y += y;
     }
     move() {
-        console.log(this.task);
         if (this.task === 1) {
             if (this.dir === 1) {
                 let angle = Math.atan2(this.pt1.y - this.y, this.pt1.x - this.x);
