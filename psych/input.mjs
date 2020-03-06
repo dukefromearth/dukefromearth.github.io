@@ -10,7 +10,8 @@ export default function Listen(document, canvas) {
         space: false,
         mousex: 0,
         mousey: 0,
-        angle: 0
+        angle: 0,
+        click: false
     };
 
     function updateDirection(x, y) {
@@ -88,9 +89,17 @@ export default function Listen(document, canvas) {
     })
 
     document.addEventListener("mousemove", function (event) {
-        movement.mousex = event.clientX;
-        movement.mousey = event.clientY;
+        movement.mousex = event.offsetX;
+        movement.mousey = event.offsetY;
         movement.angle = updateDirection(movement.mousex, movement.mousey);
+    });
+
+    document.addEventListener("mousedown", function () {
+        movement.click = true;
+    });
+
+    document.addEventListener("mouseup", function () {
+        movement.click = false;
     });
 
     document.addEventListener('keydown', function (event) {
