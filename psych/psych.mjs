@@ -3,12 +3,14 @@ import Success_bar from './success_bar.mjs';
 import Target from './target.mjs';
 import Collision from './collisions.mjs';
 
-var play = document.getElementById('play-button');
+var task1_button = document.getElementById('task1-button');
+var task2_button = document.getElementById('task2-button');
 var play_menu = document.getElementById('play-menu');
 var shape_input = document.getElementById('shape-input');
 var size_input = document.getElementById('size-input');
 var speed_input = document.getElementById('speed-input');
 var color_input = document.getElementById('color-input');
+var controls = document.getElementById('controls');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 canvas.width = window.innerWidth - 20;
@@ -45,13 +47,11 @@ var draw_text = function (text_arr) {
 }
 
 var toggle_controls = () => {
-    var x = document.getElementById('controls');
-    console.log(x.className);
-    if (x.className === "hidden") {
-        x.className = "play-menu";
+    if (controls.className === "hidden") {
+        controls.className = "play-menu";
         running = false;
     } else {
-        x.className = "hidden";
+        controls.className = "hidden";
     }
 }
 
@@ -81,7 +81,8 @@ var update = function () {
         }
     }
     if (!running) {
-        if (movement.click && collision.detect_cir(mouse,target)) {
+        if (movement.click && collision.detect_cir(mouse, target)) {
+            controls.className = "hidden";
             running = true;
         }
     }
@@ -105,7 +106,6 @@ var run = () => {
     data.length = 0;
     success_bar.draw(context);
     target.draw(context);
-    data.push("Click inside circle to start.");
     data.push("Press space to pause/show controls.");
     draw_text(data);
     update();
@@ -122,19 +122,32 @@ var run = () => {
     }
 }
 
-var create_circle = (r, spd) => {
+var create_circle = (r, spd, task) => {
     let x = Math.random() * canvas.width - 40 + 20;
     let y = Math.random() * canvas.height - 40 + 20;
     let x2 = Math.random() * canvas.width - 40 + 20;
     let y2 = Math.random() * canvas.height - 40 + 20;
-    target = new Target(x, y, 'red', r, { x: x, y: y, r: 10 }, { x: x2, y: y2, r: 10 }, spd);
+    target = new Target(x, y, 'red', r, { x: x, y: y, r: 10 }, { x: x2, y: y2, r: 10 }, spd, task);
 }
 
-play.addEventListener('click', function () {
+task1_button.addEventListener('click', function () {
     canvas.style.display = 'block';
     play_menu.style.display = 'none';
     let size = parseInt(size_input.value) || 30;
-    let spd = parseInt(speed_input.value);
-    create_circle(size, spd);
+    let spd = parseInt(speed_input.value) || 2;
+    let task = 1;
+    create_circle(size, spd, task);
+    toggle_controls();
+    run();
+});
+
+task2_button.addEventListener('click', function () {
+    canvas.style.display = 'block';
+    play_menu.style.display = 'none';
+    let size = parseInt(size_input.value) || 30;
+    let spd = parseInt(speed_input.value) || 2;
+    let task = 2;
+    create_circle(size, spd, task);
+    toggle_controls();
     run();
 });
