@@ -21,6 +21,7 @@ var collision = new Collision();
 var data = [];
 var target = {};
 var running = false;
+var task2_circles = [];
 
 var debounce_keys = {
     space: 0,
@@ -85,6 +86,13 @@ var update = function () {
             controls.className = "hidden";
             running = true;
         }
+    } else {
+        if (movement.click && collision.detect_cir(mouse, target) && target.task === 2) {
+            controls.className = "hidden";
+            target.x = Math.random() * canvas.width - 40 + 20;
+            target.y = Math.random() * canvas.height - 40 + 20;
+            success_bar.update(-100);
+        }
     }
 }
 
@@ -111,14 +119,31 @@ var run = () => {
     update();
     if (running) {
         if (collision.detect_cir(target, mouse)) {
-            success_bar.update(true);
+            success_bar.update(-2);
             target.col = 'green';
         }
         else {
-            success_bar.update(false);
+            success_bar.update(2);
             target.col = 'red';
         }
         target.move();
+    }
+}
+
+var run2 = () => {
+    requestAnimationFrame(run2);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    data.length = 0;
+    success_bar.draw(context);
+    target.draw(context);
+    data.push("Press space to pause/show controls.");
+    draw_text(data);
+    update();
+    if (running) {
+        {
+            success_bar.update(2);
+            target.col = 'red';
+        }
     }
 }
 
@@ -149,5 +174,5 @@ task2_button.addEventListener('click', function () {
     let task = 2;
     create_circle(size, spd, task);
     toggle_controls();
-    run();
+    run2();
 });

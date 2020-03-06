@@ -6,14 +6,16 @@ export default class Success_bar{
         this.height = -20;
         this.slider = {x: 20, y: max_height/2, width: 20, height: 20}
     }
-    update(up){
-        if(up) {
-            if(this.slider.y > 20 + this.slider.height) {
-                this.slider.y-=2;
+    update(value){
+        if(value <= 0) {
+            if(this.slider.y + value > 20 + this.slider.height) {
+                this.slider.y+=value;
+            } else {
+                this.slider.y = 20 + this.slider.height;
             };
         }
         else {
-            if (this.slider.y <= this.max_height - this.slider.height) this.slider.y+=2;
+            if (this.slider.y <= this.max_height - this.slider.height) this.slider.y+=value;
         }
     }
     draw(context){
