@@ -113,18 +113,6 @@ var update = function () {
     }
 }
 
-class Data {
-    constructor() {
-        this.raw = [];
-    }
-    add(data) {
-        this.push(JSON.stringify(data));
-    }
-    save() {
-
-    }
-}
-
 var run = () => {
     if (check_if_times_up()) {
         window.cancelAnimationFrame(run);
