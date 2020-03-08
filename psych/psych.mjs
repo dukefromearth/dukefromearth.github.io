@@ -2,6 +2,7 @@ import input from './input.mjs';
 import Success_bar from './success_bar.mjs';
 import Target from './target.mjs';
 import Collision from './collisions.mjs';
+import ExportCSV from './exportcsv.mjs';
 
 var task1_button = document.getElementById('task1-button');
 var task2_button = document.getElementById('task2-button');
@@ -19,6 +20,8 @@ var success_bar = new Success_bar(canvas.height - 40, canvas.width - 40);
 var movement = new input(document, canvas);
 var collision = new Collision();
 var data = [];
+data.push(["target.x", "target.y", "mouse.x", "mouse.y", "millis"]);
+var data_timer = { last_time: Date.now(), increment: 100 };
 var target = {};
 var running = false;
 var show_reward = false;
@@ -62,7 +65,7 @@ var toggle_controls = () => {
 }
 
 var check_if_times_up = () => {
-    if(Date.now() - target.start_time > runtime_input*1000 && target.start_time > 0){
+    if (Date.now() - target.start_time > runtime_input * 1000 && target.start_time > 0) {
         return true;
     }
     return false;
@@ -123,20 +126,19 @@ class Data {
 }
 
 var run = () => {
-    if(check_if_times_up()) {
+    if (check_if_times_up()) {
         window.cancelAnimationFrame(run);
         stop();
         return;
     }
     requestAnimationFrame(run);
     context.clearRect(0, 0, canvas.width, canvas.height);
-    data.length = 0;
-    if(show_reward) success_bar.draw(context);
+    if (show_reward) success_bar.draw(context);
     target.draw(context);
-    data.push("Press space to pause/show controls.");
-    draw_text(data);
+    draw_text(["Press space to pause/show controls."]);
     update();
     if (running) {
+        push_data();
         if (collision.detect_cir(target, mouse)) {
             success_bar.update(-canvas.height / 1000);
             target.col = 'green';
@@ -149,19 +151,27 @@ var run = () => {
     }
 }
 
+function push_data() {
+    if (Date.now() - data_timer.last_time > data_timer.increment) {
+        data.push([target.x, target.y, mouse.x, mouse.y, Date.now() - target.start_time]);
+        data_timer.last_time = Date.now();
+    }
+}
+
 var stop = () => {
-    requestAnimationFrame(stop);
+    // requestAnimationFrame(stop);
     context.save();
     // context.clearRect(0, 0, canvas.width, canvas.height);
     context.fillStyle = 'white';
     var time_up = "TIME IS UP!";
     var width = context.measureText(time_up).width;
-    context.fillText(time_up, canvas.width/2 - width/2, canvas.height/2);
+    context.fillText(time_up, canvas.width / 2 - width / 2, canvas.height / 2);
     context.restore();
+    ExportCSV('data_dump.csv', data);
 }
 
 var run2 = () => {
-    if(check_if_times_up()) {
+    if (check_if_times_up()) {
         window.cancelAnimationFrame(run2);
         stop();
         return;
@@ -169,15 +179,13 @@ var run2 = () => {
     requestAnimationFrame(run2);
     target.speed = Date.now() - target.time;
     context.clearRect(0, 0, canvas.width, canvas.height);
-    data.length = 0;
-    if(show_reward) success_bar.draw(context);
+    if (show_reward) success_bar.draw(context);
     target.draw(context);
-    data.push("Press space to pause/show controls.");
-    data.push(("Time left: " + (target.max_time - target.speed) / 1000));
+    draw_text(["Press space to pause/show controls."]);
     update();
     if (running) {
         {
-            draw_text(data);
+            push_data();
             if (target.speed >= target.max_time) {
                 target.x = between(100, canvas.width - 100);
                 target.y = between(100, canvas.height - 100);
@@ -196,28 +204,27 @@ var create_circle = (r, spd, task) => {
     target = new Target(x, y, 'red', r, { x: x, y: y, r: 10 }, { x: x2, y: y2, r: 10 }, spd, task);
 }
 
-task1_button.addEventListener('click', function () {
+function setup_task(task_num) {
     canvas.style.display = 'block';
     play_menu.style.display = 'none';
     runtime_input = parseInt(runtime_input.value);
-    if(show_reward_input.value === 'yes') show_reward = true;
+    if (show_reward_input.value === 'yes') show_reward = true;
     let size = parseInt(size_input.value) || 30;
     let spd = parseInt(speed_input.value) || 2;
-    let task = 1;
-    create_circle(size, spd, task);
+    if (task_num === 2) {
+        success_bar.update(-canvas.height / 50);
+        spd *= 1000;
+    }
+    create_circle(size, spd, task_num);
     toggle_controls();
+}
+
+task1_button.addEventListener('click', function () {
+    setup_task(1);
     run();
 });
 
 task2_button.addEventListener('click', function () {
-    canvas.style.display = 'block';
-    play_menu.style.display = 'none';
-    runtime_input = parseInt(runtime_input.value);
-    if(show_reward_input.value === 'yes') show_reward = true;
-    let size = parseInt(size_input.value) || 30;
-    let spd = parseFloat(speed_input.value) * 1000 || 2000;
-    let task = 2;
-    create_circle(size, spd, task);
-    toggle_controls();
+    setup_task(2);
     run2();
 });
