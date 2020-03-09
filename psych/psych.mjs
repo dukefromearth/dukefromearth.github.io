@@ -4,8 +4,14 @@ import Target from './target.mjs';
 import Collision from './collisions.mjs';
 import ExportCSV from './exportcsv.mjs';
 
+/********************* SETUP **********************/
+
 var task1_button = document.getElementById('task1-button');
 var task2_button = document.getElementById('task2-button');
+var export_csv_button = document.getElementById('export-csv-button');
+var export_csv_input = document.getElementById('export-csv-input');
+var reload_button = document.getElementById('reload-button');
+var stop_menu = document.getElementById('stop-menu');
 var play_menu = document.getElementById('play-menu');
 var runtime_input = document.getElementById('runtime-input');
 var size_input = document.getElementById('size-input');
@@ -25,8 +31,6 @@ var data_timer = { last_time: Date.now(), increment: 100 };
 var target = {};
 var running = false;
 var show_reward = false;
-var task2_circles = [];
-
 var debounce_keys = {
     space: 0,
     a: 0,
@@ -34,12 +38,13 @@ var debounce_keys = {
     s: 0,
     w: 0
 };
-
 var mouse = {
     x: 0,
     y: 0,
     r: 1
 }
+
+/********************* UTILITIES **********************/
 
 var between = (min, max) => {
     return Math.random() * (max - min) + min;
@@ -55,12 +60,14 @@ var draw_text = function (text_arr) {
     }
 }
 
-var toggle_controls = () => {
+var toggle_controls = (option) => {
     if (controls.className === "hidden") {
         controls.className = "play-menu";
+        stop_menu.className = "hidden";
         running = false;
     } else {
         controls.className = "hidden";
+        if(option) stop_menu.className = "play-menu";
     }
 }
 
@@ -69,6 +76,21 @@ var check_if_times_up = () => {
         return true;
     }
     return false;
+}
+
+function push_data() {
+    if (Date.now() - data_timer.last_time > data_timer.increment) {
+        data.push([target.x, target.y, mouse.x, mouse.y, Date.now() - target.start_time]);
+        data_timer.last_time = Date.now();
+    }
+}
+
+var create_circle = (r, spd, task) => {
+    let x = between(100, canvas.width - 100);
+    let y = between(100, canvas.height - 100);
+    let x2 = between(100, canvas.width - 100);
+    let y2 = between(100, canvas.height - 100);
+    target = new Target(x, y, 'red', r, { x: x, y: y, r: 10 }, { x: x2, y: y2, r: 10 }, spd, task);
 }
 
 var update = function () {
@@ -113,13 +135,15 @@ var update = function () {
     }
 }
 
-var run = () => {
+/********************* RUNNING ANIMATIONS **********************/
+
+var run_task1 = () => {
     if (check_if_times_up()) {
-        window.cancelAnimationFrame(run);
+        window.cancelAnimationFrame(run_task1);
         stop();
         return;
     }
-    requestAnimationFrame(run);
+    requestAnimationFrame(run_task1);
     context.clearRect(0, 0, canvas.width, canvas.height);
     if (show_reward) success_bar.draw(context);
     target.draw(context);
@@ -139,32 +163,13 @@ var run = () => {
     }
 }
 
-function push_data() {
-    if (Date.now() - data_timer.last_time > data_timer.increment) {
-        data.push([target.x, target.y, mouse.x, mouse.y, Date.now() - target.start_time]);
-        data_timer.last_time = Date.now();
-    }
-}
-
-var stop = () => {
-    // requestAnimationFrame(stop);
-    context.save();
-    // context.clearRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = 'white';
-    var time_up = "TIME IS UP!";
-    var width = context.measureText(time_up).width;
-    context.fillText(time_up, canvas.width / 2 - width / 2, canvas.height / 2);
-    context.restore();
-    ExportCSV('data_dump.csv', data);
-}
-
-var run2 = () => {
+var run_task2 = () => {
     if (check_if_times_up()) {
-        window.cancelAnimationFrame(run2);
+        window.cancelAnimationFrame(run_task2);
         stop();
         return;
     }
-    requestAnimationFrame(run2);
+    requestAnimationFrame(run_task2);
     target.speed = Date.now() - target.time;
     context.clearRect(0, 0, canvas.width, canvas.height);
     if (show_reward) success_bar.draw(context);
@@ -184,12 +189,16 @@ var run2 = () => {
     }
 }
 
-var create_circle = (r, spd, task) => {
-    let x = between(100, canvas.width - 100);
-    let y = between(100, canvas.height - 100);
-    let x2 = between(100, canvas.width - 100);
-    let y2 = between(100, canvas.height - 100);
-    target = new Target(x, y, 'red', r, { x: x, y: y, r: 10 }, { x: x2, y: y2, r: 10 }, spd, task);
+var stop = () => {
+    requestAnimationFrame(stop);
+    context.save();
+    // context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = 'white';
+    var time_up = "TIME IS UP!";
+    var width = context.measureText(time_up).width;
+    context.fillText(time_up, canvas.width / 2 - width / 2, canvas.height / 2);
+    context.restore();
+    stop_menu.className = "play-menu";
 }
 
 function setup_task(task_num) {
@@ -207,12 +216,20 @@ function setup_task(task_num) {
     toggle_controls();
 }
 
+/********************* BUTTON INPUT **********************/
+
 task1_button.addEventListener('click', function () {
     setup_task(1);
-    run();
+    run_task1();
 });
 
 task2_button.addEventListener('click', function () {
     setup_task(2);
-    run2();
+    run_task2();
 });
+
+
+export_csv_button.addEventListener('click', function () {
+    ExportCSV(export_csv_input.value + ".csv", data);
+});
+

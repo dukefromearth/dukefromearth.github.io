@@ -46,6 +46,7 @@
     </p>
     <button id="task1-button">Task1 - Continuous Visual Presentation</button>
     <button id="task2-button">Task2 - Discontinuous Visual Presentation</button>
+    
   </div>
 
   <div id='controls' class="hidden">
@@ -67,7 +68,15 @@
     <p>
       <pre>'space'   hide controls</pre>
     </p>
+    <button onClick="window.location.reload();" id="reload-button">Click Here To Reload</button>
 
+  </div>
+
+  <div id='stop-menu' class="hidden">
+    <p>Filename
+      <input type="text" id="export-csv-input" placeholder="data" value="data" />
+    </p>
+    <button id="export-csv-button">Click Here Export</button>
   </div>
 
   <canvas id="canvas"></canvas>
