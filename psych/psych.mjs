@@ -33,10 +33,10 @@ var running = false;
 var show_reward = false;
 var debounce_keys = {
     space: 0,
-    a: 0,
-    d: 0,
-    s: 0,
-    w: 0
+    left: 0,
+    right: 0,
+    down: 0,
+    up: 0
 };
 var mouse = {
     x: 0,
@@ -67,7 +67,7 @@ var toggle_controls = (option) => {
         running = false;
     } else {
         controls.className = "hidden";
-        if(option) stop_menu.className = "play-menu";
+        if (option) stop_menu.className = "play-menu";
     }
 }
 
@@ -80,7 +80,7 @@ var check_if_times_up = () => {
 
 function push_data() {
     if (Date.now() - data_timer.last_time > data_timer.increment) {
-        data.push([target.x, target.y, mouse.x, mouse.y, Date.now() - target.start_time]);
+        data.push([Math.floor(target.x), Math.floor(target.y), mouse.x, mouse.y, Date.now() - target.start_time]);
         data_timer.last_time = Date.now();
     }
 }
@@ -97,20 +97,40 @@ var update = function () {
     mouse.x = movement.mousex;
     mouse.y = movement.mousey;
     if (movement.up) {
-        if (target.r < 100) {
-            target.r++;
+        if (Date.now() - debounce_keys.up > 300) {
+            debounce_keys.up = Date.now();
+            if (target.r < 100) {
+                target.r += 5;
+            }
         }
     }
     if (movement.down) {
-        if (target.r > 5) {
-            target.r--;
+        if (Date.now() - debounce_keys.left > 300) {
+            debounce_keys.left = Date.now();
+            if (target.r > 5) {
+                target.r -= 5;
+            }
         }
     }
     if (movement.right) {
-        target.speed += 0.25;
+        if (Date.now() - debounce_keys.right > 300) {
+            debounce_keys.right = Date.now();
+            if (target.task === 1) {
+                if (target.speed < 10) target.speed += 1;
+            } else {
+                target.max_time -= 500;
+            }
+        }
     }
     if (movement.left) {
-        if (target.speed > 1) target.speed -= 0.25;
+        if (Date.now() - debounce_keys.left > 300) {
+            debounce_keys.left = Date.now();
+            if (target.task === 1) {
+                if (target.speed > 1) target.speed -= 1;
+            } else {
+                target.max_time += 500;
+            }
+        }
     }
     if (movement.space) {
         if (Date.now() - debounce_keys.space > 300) {
@@ -160,6 +180,8 @@ var run_task1 = () => {
             target.col = 'red';
         }
         target.move();
+    } else {
+        target.draw_data(context, canvas);
     }
 }
 
@@ -174,6 +196,7 @@ var run_task2 = () => {
     context.clearRect(0, 0, canvas.width, canvas.height);
     if (show_reward) success_bar.draw(context);
     target.draw(context);
+
     draw_text(["Press space to pause/show controls."]);
     update();
     if (running) {
@@ -186,6 +209,8 @@ var run_task2 = () => {
                 target.time = Date.now();
             }
         }
+    } else {
+        target.draw_data(context, canvas);
     }
 }
 

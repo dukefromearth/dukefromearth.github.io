@@ -54,4 +54,18 @@ export default class Target {
         context.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
         context.stroke();
     }
+    draw_data(context, canvas) {
+        context.save();
+        if (this.task === 2) {
+            context.fillText("speed: " + this.max_time/1000 + " seconds", canvas.width - 400, canvas.height / 20);
+            context.fillText("reward: " + (10 - this.max_time/1000) + "x", canvas.width - 400, canvas.height / 20 + 20);
+        }
+        else {
+            context.fillText("speed: " + this.speed, canvas.width - 400, canvas.height / 20);
+            context.fillText("reward: " + (this.speed+(100-this.r)/10) + "x" , canvas.width - 400, canvas.height / 20 + 20);
+            context.fillText("size: " + this.r, canvas.width - 400, canvas.height / 20 + 40);
+        }
+        
+        context.restore();
+    }
 }
