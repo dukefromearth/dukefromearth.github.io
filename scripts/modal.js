@@ -87,7 +87,7 @@ $(document).ready(function () {
     ofcourse: {
       title: 'ofCourse.io',
       tag: 'HUMAN COMPUTER INTERACTION',
-      detail: 'Online class for students in Shanghai, China teaching Human computer interaction via Arduion, Node.js and JavaScript.',
+      detail: 'Online class for students in Shanghai, China teaching Human computer interaction via Arduino, Node.js and JavaScript.',
       link: 'http://my.ofcourse.io/course/249'
     },
     automata: {
