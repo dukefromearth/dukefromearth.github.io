@@ -220,7 +220,7 @@ $(document).ready(function () {
       $(this).text(modalText[id].bullets[index]);
     });
     $.each($('#modal .slide'), function (index, value) {
-      let fileType = '.';
+      let fileType = '.jpg';
       if (!UrlExists("img/slides/" + id + '-' + index + fileType)) fileType = '.gif';
       $(this).css({
         background:
