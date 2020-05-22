@@ -54,7 +54,7 @@ function mindRunner() {
     Svg = Matter.Svg,
     Common = Matter.Common,
     Vertices = Matter.Vertices,
-    counter = 1,
+    counter = 0,
     render, runner, world, engine, mouse, mouseConstraint, head, pulley1, pulley2;
 
   function createEngine() {
