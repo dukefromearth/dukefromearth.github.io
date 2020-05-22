@@ -391,35 +391,39 @@ function mindRunner() {
 
     let computer = getComputer(x - 275, y - 80);
 
-    let pulley;
-    setTimeout(function () {
-      pulley = createPulley();
-      World.add(world, pulley);
-    }, 1000);
 
     World.add(world, computer);
     World.add(world, [lHand, rHand]);
     World.add(world, neck);
 
-    Events.on(engine, 'beforeUpdate', function (event) {
-      let lH = lHand.bodies[0];
-      lH.force.y = - Math.sin(counter / 3) / 20;
-      lH.angle = Math.PI + Math.atan2(lH.position.y - y, lH.position.x - x);
-      let rH = rHand.bodies[0];
-      rH.force.y = + Math.sin(counter / 2) / 20;
-      rH.angle = Math.PI + Math.atan2(lH.position.y - y, lH.position.x - x);
 
-      if (pulley) {
-        pulley1.angle += 0.0005;
-        pulley2.angle += 0.0005;
-      }
+    let pulley;
+    setTimeout(function () {
+      pulley = createPulley();
+      World.add(world, pulley);
+      Events.on(engine, 'beforeUpdate', function (event) {
+        let lH = lHand.bodies[0];
+        lH.force.y = - Math.sin(counter / 3) / 20;
+        lH.angle = Math.PI + Math.atan2(lH.position.y - y, lH.position.x - x);
+        let rH = rHand.bodies[0];
+        rH.force.y = + Math.sin(counter / 2) / 20;
+        rH.angle = Math.PI + Math.atan2(lH.position.y - y, lH.position.x - x);
 
-      if (counter % 200 === 0) {
-        addLightbulb();
-      }
+        if (pulley) {
+          pulley1.angle += 0.0005;
+          pulley2.angle += 0.0005;
+        }
 
-      counter++;
-    });
+        if (counter % 200 === 0) {
+          addLightbulb();
+        }
+
+        counter++;
+      });
+    }, 1000);
+
+
+
 
   }
 
