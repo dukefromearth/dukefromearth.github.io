@@ -445,12 +445,16 @@ function mindRunner() {
   };
 }
 
-let runner = mindRunner();
+let runner;
+
+setTimeout(function () {
+  runner = mindRunner();
+}, 400);
 
 // Resize only when width is changed, but not height.
 $(window).resize(function () {
 
-  if (Math.abs(runner.canvas.width / 2 - deviceInfo.screenWidth()) > 30) {
+  if (Math.abs(runner.canvas.width / 2 - deviceInfo.screenWidth()) > 30 && runner) {
     runner.stop();
     $('canvas').remove();
     runner = mindRunner();
