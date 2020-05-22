@@ -391,10 +391,11 @@ function mindRunner() {
 
     let computer = getComputer(x - 275, y - 80);
 
-    // if (deviceInfo.screenWidth() > 600) {
-    let pulley = createPulley();
-    World.add(world, pulley);
-    // }
+    let pulley;
+    setTimeout(function () {
+      pulley = createPulley();
+      World.add(world, pulley);
+    }, 1000);
 
     World.add(world, computer);
     World.add(world, [lHand, rHand]);
@@ -408,10 +409,10 @@ function mindRunner() {
       rH.force.y = + Math.sin(counter / 2) / 20;
       rH.angle = Math.PI + Math.atan2(lH.position.y - y, lH.position.x - x);
 
-      // if (deviceInfo.screenWidth() > 600) {
-      pulley1.angle += 0.0005;
-      pulley2.angle += 0.0005;
-      // }
+      if (pulley) {
+        pulley1.angle += 0.0005;
+        pulley2.angle += 0.0005;
+      }
 
       if (counter % 200 === 0) {
         addLightbulb();
@@ -445,11 +446,7 @@ function mindRunner() {
   };
 }
 
-let runner;
-
-setTimeout(function () {
-  runner = mindRunner();
-}, 400);
+let runner = mindRunner();
 
 // Resize only when width is changed, but not height.
 $(window).resize(function () {
