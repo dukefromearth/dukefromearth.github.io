@@ -461,3 +461,40 @@ $(window).resize(function () {
     runner = mindRunner();
   }
 });
+
+
+console.log('myNumber = ', myNumber);
+console.log('++myNumber = ', ++myNumber);
+console.log('--myNumber = ', --myNumber);
+console.log('myNumber % 2 = ', myNumber % 2);
+
+var myNumber = 5;
+myNumber;
+++myNumber;
+--myNumber;
+myNumber % 2;
+
+var myNumber = 5;
+myNumber === 5;
+++myNumber >= 5;
+--myNumber > 5;
+myNumber % 2 != 1;
+
+let add = function (a, b) {
+  return a + b;
+}
+
+let x = add(1, 2);
+
+let position = {
+  x: 5,
+  y: 2,
+  moveRight: function () {
+    this.x++;
+  },
+  moveLeft: function () {
+    this.x--;
+  }
+}
+
+console.log(position.x);

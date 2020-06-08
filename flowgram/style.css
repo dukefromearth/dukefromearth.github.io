@@ -1,0 +1,225 @@
+body{
+    margin: 0px;
+}
+#logo{
+    position: absolute;
+    top:10px;
+    left:10px;
+    width:60px;
+    height:60px;
+}
+h1{
+    position: absolute;
+    top:0px;
+    left:100px;
+    font-family:"Microsoft Yahei";
+    font-weight: 20;
+    font-size: 400;
+    letter-spacing: 4px;
+    color:rgba(120,120,120,0.6);
+
+}
+
+#title{
+    font-family: "Times New Roman",Serif,Verdana;
+    font-size: 1.875em;
+    font-weight: lighter;
+    color:#212121;
+    position: relative;
+    left: 160px;
+}
+#UI{
+    width:220px;
+    height:400px;
+    position: fixed;
+    right:270px;
+    top:1px;
+    margin:0px;
+    background-color: rgba(250, 255, 255, 0.6);
+    border: 1px solid rgba(0,0,0,0.2);
+    padding:10px;
+}
+
+.btn{
+    width:82px;
+    height:24px;
+    left:10px;
+    border-radius: 12px;
+    color:white;
+    border-color: #2D9CCF;
+    font-size: 10px;
+    transition: 1s;
+    margin-left:5px;
+    background-color:#2D9CCF;
+}
+.btn:hover{
+    /* background-color:#2FA1D6;
+    color: white; */
+    border-color: rgb(10, 10, 1);
+    /* font-size: 11.4px; */
+}
+
+#sofaTexture{
+    position: relative;
+    top:0px;
+}
+#handrailTexture{
+    position: relative;
+    top:18px;
+}
+#plateTexture{
+    position: relative;
+    top:36px;
+}
+#videoTexture{
+    position: relative;
+    top:54px;
+}
+#textureVideo{
+    position: absolute;
+    top:0px;
+    left:630px;
+    width:280px;
+    height:160px;
+}
+
+
+/* 沙发面料 */
+.sofaFrame{
+    /* border: 0.5px solid #121212; */
+    /* border-radius: 4px; */
+    padding: 2px;
+    margin: 2px;
+    border-spacing: 8px;
+   
+}
+.sofaImg{
+    width:30px;
+    height:30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 15px;
+    transition: 1s;  
+}
+#sofa1{
+    background-image: url("sofaPicture/p1.jpg");
+}
+#sofa2{
+    background-image: url("sofaPicture/p2.jpg");
+}
+#sofa3{
+    background-image: url("sofaPicture/p3.jpg");
+}
+#sofa4{
+    background-image: url("sofaPicture/p4.jpg");
+}
+#sofa5{
+    background-image: url("sofaPicture/p5.jpg");
+}
+
+
+/* 扶手面料 */
+.handrailFrame{
+    position: relative;
+    top:18px;
+    /* border: 0.5px solid #121212; */
+    /* border-radius: 4px; */
+    padding: 2px;
+    margin: 2px;
+    border-spacing: 8px;
+}
+.handrailImg{
+    width:30px;
+    height:30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 15px;
+    transition: 1s;
+}
+#handrail1{
+    background-image: url("handrailPicture/p1.jpg");
+}
+#handrail2{
+    background-image: url("handrailPicture/p2.jpg");
+}
+#handrail3{
+    background-image: url("handrailPicture/p3.jpg");
+}
+#handrail4{
+    background-image: url("handrailPicture/p4.jpg");
+}
+#handrail5{
+    background-image: url("handrailPicture/p5.jpg");
+}
+/* 底板颜色 */
+.plateFrame{
+    position: relative;
+    top:36px;
+    /* border: 0.5px solid #121212; */
+    /* border-radius: 4px; */
+    padding: 2px;
+    margin: 2px;
+    border-spacing: 8px;
+}
+.plateImg{
+    width:30px;
+    height:30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 15px;
+    margin:20px;
+    transition: 1s;
+}
+#plate1{
+    background-image: url("platePicture/p1.jpg");
+}
+#plate2{
+    background-image: url("platePicture/p2.jpg");
+}
+#plate3{
+    background-image: url("platePicture/p3.jpg");
+}
+#plate4{
+    background-image: url("platePicture/p4.jpg");
+}
+#plate5{
+    background-image: url("platePicture/p5.jpg");
+}
+
+#bgTable{
+    position: relative;
+    top:54px;
+    /* border: 0.5px solid #000000; */
+    /* border-radius: 4px; */
+    border-spacing: 8px;
+    padding: 2px;
+    margin: 2px;
+}
+.bg{
+    width:30px;
+    height:30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 15px;
+    transition: 1s;
+}
+#bg1b{
+    background-image: url("bgImg/bg1b.jpg");
+}
+#bg2b{
+    background-image: url("bgImg/bg2b.jpg");
+}
+#bg3b{
+    background-image: url("bgImg/bg3b.jpg");
+}
+#bg4b{
+    background-image: url("bgImg/bg4b.jpg");
+}
+#bg5b{
+    background-image: url("bgImg/bg5b.jpg");
+}
+
