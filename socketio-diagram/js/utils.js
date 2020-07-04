@@ -55,6 +55,8 @@ export function loadImages() {
     for (let i = 0; i < images.length; i++) {
         rv[images[i].id] = new Image();
         rv[images[i].id].src = images[i].src;
+
     }
+    console.log(rv)
     return rv;
 }
