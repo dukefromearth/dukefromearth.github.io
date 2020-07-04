@@ -2,51 +2,51 @@
 let images = [
     {
         id: "arduino-logo",
-        src: "../assets/arduino-logo.png"
+        src: "/assets/arduino-logo.png"
     },
     {
         id: "button",
-        src: "../assets/button.png"
+        src: "/assets/button.png"
     },
     {
         id: "socket-logo",
-        src: "../assets/socket-logo.png"
+        src: "/assets/socket-logo.png"
     },
     {
         id: "node-logo",
-        src: "../assets/node-logo.png"
+        src: "/assets/node-logo.png"
     },
     {
         id: "backend-logo",
-        src: "../assets/backend-logo.png"
+        src: "/assets/backend-logo.png"
     },
     {
         id: "frontend-logo",
-        src: "../assets/frontend-logo.png"
+        src: "/assets/frontend-logo.png"
     },
     {
         id: "serialport-logo",
-        src: "../assets/serialport-logo.png"
+        src: "/assets/serialport-logo.png"
     },
     {
         id: "serialport-code",
-        src: "../assets/serialport-code.png"
+        src: "/assets/serialport-code.png"
     },
     {
         id: "socket-front-code",
-        src: "../assets/socket-front-code.png"
+        src: "/assets/socket-front-code.png"
     },
     {
         id: "socket-back-code",
-        src: "../assets/socket-back-code.png"
+        src: "/assets/socket-back-code.png"
     },
     {
         id: "arduino-code",
-        src: "../assets/arduino-code.png"
+        src: "/assets/arduino-code.png"
     },
     {
         id: "canvas-code",
-        src: "../assets/canvas-code.png"
+        src: "/assets/canvas-code.png"
     }
 ]
 
