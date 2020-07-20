@@ -1,0 +1,25 @@
+{
+  "name": "semrs",
+  "version": "1.0.0",
+  "description": "Reward and Attention Tracking Training Software",
+  "main": "main.js",
+  "dependencies": {
+    "commonjs": "^0.0.1",
+    "electron-packager": "^14.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "python": "python -m http.server 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dukefromearth/SEMRS.git"
+  },
+  "author": "Stephen Duke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dukefromearth/SEMRS/issues"
+  },
+  "homepage": "https://github.com/dukefromearth/SEMRS#readme"
+}
