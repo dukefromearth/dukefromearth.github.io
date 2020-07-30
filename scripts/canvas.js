@@ -462,12 +462,6 @@ $(window).resize(function () {
   }
 });
 
-
-console.log('myNumber = ', myNumber);
-console.log('++myNumber = ', ++myNumber);
-console.log('--myNumber = ', --myNumber);
-console.log('myNumber % 2 = ', myNumber % 2);
-
 var myNumber = 5;
 myNumber;
 ++myNumber;
@@ -496,5 +490,3 @@ let position = {
     this.x--;
   }
 }
-
-console.log(position.x);

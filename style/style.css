@@ -844,16 +844,9 @@ section:nth-of-type(4) .blog-wrap {
   width: 100%;
 }
 section:nth-of-type(4) .blog-wrap #thumb-1 {
-  background: url("../img/blog-1.jpg") center center/cover;
-}
-section:nth-of-type(4) .blog-wrap #thumb-2 {
-  background: url("../img/blog-2.jpg") center center/cover;
-}
-section:nth-of-type(4) .blog-wrap #thumb-3 {
-  background: url("../img/blog-3.jpg") center center/cover;
-}
-section:nth-of-type(4) .blog-wrap #thumb-4 {
-  background: url("../img/blog-4.jpg") center center/cover;
+  background: url("../img/blog-1.gif") center center/cover;
+  width: 100%;
+  height: 369px;
 }
 section:nth-of-type(4) .blog-wrap .fade-wrap {
   transition: opacity 0.3s;
@@ -1188,8 +1181,8 @@ footer .footnote .highlight {
     padding: 130px 0 180px 0;
   }
   section:nth-of-type(4) .label {
-    font-size: 16pt;
-    line-height: 22pt;
+    font-size: 24pt;
+    line-height: 28pt;
   }
   section:nth-of-type(4) .date {
     font-size: 8.5pt;
@@ -1198,8 +1191,8 @@ footer .footnote .highlight {
     margin: 15px 0px;
   }
   section:nth-of-type(4) .text {
-    font-size: 11pt;
-    line-height: 15pt;
+    font-size: 18pt;
+    line-height: 20pt;
   }
   section:nth-of-type(4) .blog-wrap {
     width: 400px;
@@ -1359,14 +1352,13 @@ footer .footnote .highlight {
   section:nth-of-type(4) .blog-wrap {
     margin: 0 0 50px 20px;
     opacity: 0;
-    width: 400px;
   }
 }
 @media screen and (min-width: 1280px) {
   section:nth-of-type(4) .blog-wrap {
     margin: 0 0 50px 20px;
-    width: 270px;
+    width: 700px;
   }
 }
-
-/*# sourceMappingURL=style.css.map */
+/* 
+# sourceMappingURL=style.css.map */
