@@ -1280,6 +1280,10 @@ footer .footnote .highlight {
     animation: slideUp 0.75s 0.9s ease both;
     opacity: 0;
   }
+  .animated.waypoint#gallery .mix:nth-child(18) > div {
+    animation: slideUp 0.75s 0.9s ease both;
+    opacity: 0;
+  }
 
   .animated.slide-up {
     animation: slideUp 0.75s ease both;
