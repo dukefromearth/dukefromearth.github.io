@@ -450,43 +450,16 @@ function mindRunner() {
   };
 }
 
-let runner = mindRunner();
+let runner = null;
+setTimeout(function () {
+  runner = mindRunner();
+}, 600);
 
 // Resize only when width is changed, but not height.
 $(window).resize(function () {
-
   if (Math.abs(runner.canvas.width / 2 - deviceInfo.screenWidth()) > 30 && runner) {
-    runner.stop();
+    if (runner) runner.stop();
     $('canvas').remove();
     runner = mindRunner();
   }
 });
-
-var myNumber = 5;
-myNumber;
-++myNumber;
---myNumber;
-myNumber % 2;
-
-var myNumber = 5;
-myNumber === 5;
-++myNumber >= 5;
---myNumber > 5;
-myNumber % 2 != 1;
-
-let add = function (a, b) {
-  return a + b;
-}
-
-let x = add(1, 2);
-
-let position = {
-  x: 5,
-  y: 2,
-  moveRight: function () {
-    this.x++;
-  },
-  moveLeft: function () {
-    this.x--;
-  }
-}
