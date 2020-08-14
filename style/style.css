@@ -682,7 +682,7 @@ section:nth-of-type(3) .float-bar {
   background: #e31b6d;
   border-radius: 1px;
   height: 25px;
-  margin: auto 0;
+  margin: auto 525;
   overflow: hidden;
   position: absolute;
   transition: all 0.5s ease-in-out;
@@ -705,7 +705,8 @@ section:nth-of-type(3) .text {
   width: 100%;
 }
 section:nth-of-type(3) #gallery {
-  margin: 20px 0;
+  /* margin: 20px 0; */
+  margin: 20px auto;
 }
 section:nth-of-type(3) #gallery .text {
   color: #000;
@@ -892,7 +893,7 @@ section:nth-of-type(4) .date {
 section:nth-of-type(4) .bar {
   background: #04c2c9;
   height: 3px;
-  margin: 10px 0px;
+  /* margin: 10px 0px; */
   width: 25%;
 }
 
