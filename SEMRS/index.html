@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160808688-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-160808688-1');
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="looks.css">
+</head>
+
+<body>
+
+    <style>
+        #form {
+            display: block;
+        }
+
+        #canvas {
+            display: none;
+            margin-left: 10px;
+            margin-top: 10px;
+            background: rgb(0, 0, 0);
+            border: thin solid #aaaaaa;
+        }
+    </style>
+
+    <div role="group" tabindex="0" aria-label="Task settings" id="play-menu" class="play-menu">
+        <h1>Saccadic Eye Movement Tracking</h1>
+        <h2>Enter Data</h2>
+        <p aria-label="Task 2 speed clarification">For task1, speed refers to how quickly the target moves.</p>
+        <p aria-label="Task 2 speed clarification">For task2, speed refers to seconds before target resets.</p>
+
+        <p aria-label="Runtime input">Run Time
+            <input type="number" id="runtime-input" placeholder="10" value=10 />
+        </p>
+
+        <p aria-label="Target Size">Size
+            <input type="number" id="size-input" placeholder="1 - 100" value=30 min="1" max="100" />
+        </p>
+
+        <p aria-label="Target Speed">Speed
+            <input type="number" id="speed-input" placeholder="1 - 10" value=4 min="1" max="10" />
+        </p>
+
+        <p aria-label="Show the reward">Show Reward
+            <select id="show-reward-input" placeholder="no" value=no>
+                <option value='yes'>yes</option>
+                <option value='no'>no</option>
+            </select>
+        </p>
+
+        <button id="task1-button">Task1 - Continuous Visual Presentation</button>
+        <button id="task2-button">Task2 - Discontinuous Visual Presentation</button>
+
+    </div>
+
+    <div tabindex="0" aria-label="controls" id='controls' class="hidden">
+        <h2>CONTROLS</h2>
+        <p>
+        <pre tabindex="0" aria-label="press 'a' key to decrease speed">'a'       decrease speed</pre>
+        </p>
+        <p>
+        <pre tabindex="0" aria-label="press 'd' key to increase speed">'d'       increase speed</pre>
+        </p>
+        <p>
+        <pre tabindex="0" aria-label="press 'w' key to increase size">'w'       increase size</pre>
+        </p>
+        <p>
+        <pre tabindex="0" aria-label="press 's' key to decrease size">'s'       decrease size</pre>
+        </p>
+        <p>
+        <pre tabindex="0" aria-label="press space to hide controls">'space'   hide controls</pre>
+        </p>
+        <p>
+            <b tabindex="0" aria-label="click inside the circle to begin">Click inside circle to begin.</b>
+        </p>
+        <button tabindex="0" aria-label="Click here to reload" onClick="window.location.reload();"
+            id="reload-button">Click
+            Here To Reload</button>
+
+    </div>
+
+    <div type="group" aria-label="Stop menu and data export" id='stop-menu' class="hidden">
+        <p>Filename
+            <input aria-label="Filename" type="text" id="export-csv-input" placeholder="data" value="data" />
+        </p>
+        <button id="export-csv-button">Click Here Export</button>
+    </div>
+
+    <canvas id="canvas" tabindex="0" aria-label="Saccadic Eye Movement Psychology Experiment Software"
+        role="application"></canvas>
+
+    <script type="module" src="./psych/psych.mjs"></script>
+
+</body>
+
+</html>
