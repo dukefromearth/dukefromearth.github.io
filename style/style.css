@@ -257,6 +257,11 @@ body {
   color: #ff6dc7;
 }
 
+.highlightBlue {
+  font-family: "Raleway-semibold";
+  color: #04c2c9 !important;
+}
+
 .header {
   color: #494447;
   font-family: "raleway-bold";
@@ -1546,4 +1551,21 @@ div.cls_010 {
   font-weight: normal;
   font-style: normal;
   text-decoration: none;
+}
+
+.arrow {
+  box-sizing: border-box;
+  height: 2vw;
+  width: 2vw;
+  margin-top: 100px;
+  border-style: solid;
+  border-color: rgb(0, 0, 0);
+  border-width: 0px 1px 1px 0px;
+  transform: rotate(45deg);
+  transition: border-width 150ms ease-in-out;
+}
+
+.arrow:hover {
+  border-bottom-width: 3px;
+  border-right-width: 3px;
 }

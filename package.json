@@ -1,0 +1,38 @@
+{
+  "name": "dukefromearth.github.io",
+  "version": "1.0.0",
+  "description": "Stephen Duke's Personal Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dukefromearth/dukefromearth.github.io.git"
+  },
+  "keywords": [
+    "stephen",
+    "duke",
+    "software",
+    "developer",
+    "engineer",
+    "hardware",
+    "electronics",
+    "woodworking",
+    "metalworking",
+    "carpentry",
+    "pcb",
+    "ai",
+    "machine",
+    "learning"
+  ],
+  "author": "Stephen Duke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dukefromearth/dukefromearth.github.io/issues"
+  },
+  "homepage": "https://github.com/dukefromearth/dukefromearth.github.io#readme",
+  "dependencies": {
+    "reload": "^3.1.0"
+  }
+}
