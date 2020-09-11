@@ -1,1 +1,1 @@
-console.log('Hey DTX, quit being so nosey.')
+console.log('Quit being so nosey.')
