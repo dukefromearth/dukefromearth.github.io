@@ -31,7 +31,10 @@ class Experience {
 
         this.canvas.addEventListener("mousemove", this.onMouseMove.bind(this));
 
-        this.canvas.addEventListener("touchmove", this.onTouchMove.bind(this));
+        this.canvas.addEventListener("touchmove", function (e) {
+            preventDefault();
+            this.onTouchMove.bind(this);
+        });
 
     }
 
@@ -133,8 +136,8 @@ class Experience {
     }
 
     resize() {
-        this.canvas.width = window.innerWidth * 0.7;
-        this.canvas.height = window.innerWidth * 0.7 / 1.77;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerWidth;
         this.screen = {
             center: { x: this.canvas.width / 2, y: this.canvas.height / 2 }
         };
