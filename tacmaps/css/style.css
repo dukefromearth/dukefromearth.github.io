@@ -1,0 +1,30 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 7px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 0px 10px #00000038;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.info {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  font-family: monospace;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+}
