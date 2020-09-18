@@ -28,12 +28,12 @@ class Experience {
 
     bind() {
         window.addEventListener("resize", this.resize.bind(this), false);
-
+        let self = this;
         this.canvas.addEventListener("mousemove", this.onMouseMove.bind(this));
 
         this.canvas.addEventListener("touchmove", function (e) {
             e.preventDefault();
-            this.onTouchMove.bind(this);
+            self.onTouchMove.bind(self);
         });
 
     }
