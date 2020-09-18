@@ -32,7 +32,7 @@ class Experience {
         this.canvas.addEventListener("mousemove", this.onMouseMove.bind(this));
 
         this.canvas.addEventListener("touchmove", function (e) {
-            preventDefault();
+            e.preventDefault();
             this.onTouchMove.bind(this);
         });
 
@@ -124,8 +124,7 @@ class Experience {
     onTouchMove(ev) {
         var rect = this.canvas.getBoundingClientRect();
         this.point = {
-            x:
-                ev.touches[0].clientX - rect.left,
+            x: ev.touches[0].clientX - rect.left,
             y: ev.touches[0].clientY - rect.top
         };
 
