@@ -1,0 +1,13 @@
+#Put this file in root directory to disallow specific directories
+User-Agent: *
+Disallow: /barryapf/
+Disallow: /cgi/
+Disallow: /cssmenutools/
+Disallow: /Dates/
+Disallow: /graphics/
+Disallow: /includes/
+Disallow: /lightbox/
+Disallow: /lightbox_assets/
+Disallow: /Scripts/
+Disallow: /stats/
+Disallow: /templates/
