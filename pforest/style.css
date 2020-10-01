@@ -481,6 +481,13 @@ input.button {
   border: none;
 }
 
+.social-buttons {
+  position: relative;
+  padding-right: 5px;
+  width: 45px;
+  height: 41px;
+}
+
 /* Sidebar Social*/
 #social {
   position: relative;
