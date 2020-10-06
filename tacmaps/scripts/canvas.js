@@ -74,6 +74,7 @@ class Experience {
         window.addEventListener("resize", this.resize.bind(this), false);
         this.canvas.addEventListener("mousemove", this.onMouseMove.bind(this));
         this.canvas.addEventListener('click', function (e) {
+            this.msg = new SpeechSynthesisUtterance();
             self.audioIsEnabled = true;
             Tone.start();
             self.canvas.removeEventListener('click', function (e) { });
@@ -119,7 +120,7 @@ class Experience {
         } else {
             synth.triggerAttackRelease(this.getAvg(rgb), 0.01)
         }
-        if (!(this.lastLocation === rgb) && Date.now() - this.lastSpoken > 1500) {
+        if (!(this.lastLocation === rgb) && Date.now() - this.lastSpoken > 1000) {
             if (rgb[0] === 255 && !rgb[1] && !rgb[2]) {
                 if (this.tts.text != "Destination"); {
                     this.tts.text = "Destination";
@@ -171,15 +172,15 @@ class Experience {
             -this.canvas.width * 0.2 +
             (this.canvas.width - this.canvas.width * 5 / 4 * 1.4) * (this.distPoint.x * 1), //0.05,
             -this.canvas.height * 0.2 +
-            (this.canvas.height - height * this.image.width / this.image.height * 1.4) * (this.distPoint.y * 1), //0.05,
+            (this.canvas.height - this.canvas.height * this.image.width / this.image.height * 1.4) * (this.distPoint.y * 1), //0.05,
             this.canvas.width * 1.4,
             this.canvas.height * 1.4
         );
+
+
         // this.context.opacity = 1;
         this.handleAudio();
         this.context.restore();
-
-
     }
 
     loop() {
