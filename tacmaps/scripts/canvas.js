@@ -28,7 +28,7 @@ class Experience {
         this.image = new Image();
         this.handleCors('./assets/canvas.png', this.loadImage, true);
         this.symbols = [];
-        this.symbols.push(new Symbol('Emergency Plans', 'h1'))
+        this.symbols.push(new Symbol('Lighthouse, Elevator A6, Nearest Exit', 'h1'))
         this.symbols.push(new Symbol('Turn right', 'p'));
         this.symbols.push(new Symbol('Walk 20 feet', 'p'));
         this.symbols.push(new Symbol('Turn left', 'p'));
