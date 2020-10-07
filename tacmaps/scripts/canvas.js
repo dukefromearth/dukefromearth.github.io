@@ -19,9 +19,9 @@ class Experience {
         this.fpsInterval = 1000 / fps;
         this.then = Date.now();
 
-        this.point = { x: 0, y: 0 };
-        this.distPoint = { x: 0, y: 0 };
-        this.pos = { x: 0, y: 0 };
+        this.point = { x: this.canvas.width, y: this.canvas.height };
+        this.distPoint = { x: this.canvas.width, y: this.canvas.height };
+        this.pos = { x: this.canvas.width, y: this.canvas.height };
         this.audioIsEnabled = false;
         this.resize();
         this.bind();
