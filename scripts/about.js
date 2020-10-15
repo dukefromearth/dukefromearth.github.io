@@ -12,7 +12,7 @@ skillsButton.onclick = function () {
     if (dreams) dreams.style.display = 'none';
     var newDiv = skills.cloneNode(true);
     skills.parentNode.replaceChild(newDiv, skills);
-}   
+}
 
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
@@ -28,6 +28,7 @@ function createReviews(parent) {
     logoWrapper.href = "https://www.upwork.com/o/profiles/users/~017217808f08c50e5b/";
     let upworkLogo = document.createElement('img');
     upworkLogo.src = "../img/upwork-logo.png";
+    upworkLogo.alt = "Upwork.com Logo"
     upworkLogo.style.width = '300px';
     logoWrapper.appendChild(upworkLogo);
 

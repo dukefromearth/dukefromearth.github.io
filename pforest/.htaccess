@@ -1,5 +1,0 @@
-RewriteEngine On
-RewriteCond %{HTTPS} !=on
-RewriteRule ^/?(.*) https://%www.apetrifiedforest.com/$1 [R,L]
-
-AddType application/ogg .ogg
