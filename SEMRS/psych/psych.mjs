@@ -216,9 +216,12 @@ var run_task2 = () => {
 
     target.speed = Date.now() - target.time;
     context.clearRect(0, 0, canvas.width, canvas.height);
-    if (show_reward) success_bar.draw(context);
+    if (show_reward) {
+        success_bar.draw(context)
+        target.draw_score(context, canvas)
+    }
     target.draw(context);
-    target.draw_score(context, canvas);
+
     draw_text(["Press space to pause/show controls."]);
     update();
     if (running) {
