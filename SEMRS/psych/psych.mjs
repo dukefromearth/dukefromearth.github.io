@@ -11,6 +11,7 @@ var task2_button = document.getElementById('task2-button');
 var export_csv_button = document.getElementById('export-csv-button');
 var export_csv_input = document.getElementById('export-csv-input');
 var reload_button = document.getElementById('reload-button');
+var reward_input = document.getElementById('reward-input');
 var stop_menu = document.getElementById('stop-menu');
 var play_menu = document.getElementById('play-menu');
 var runtime_input = document.getElementById('runtime-input');
@@ -26,7 +27,7 @@ var success_bar = new Success_bar(canvas.height - 40, canvas.width - 40);
 var movement = new input(document, canvas);
 var collision = new Collision();
 var data = [];
-data.push(["target.x", "target.y", "mouse.x", "mouse.y", "millis"]);
+data.push(["target.x", "target.y", "mouse.x", "mouse.y", "distance_to_target", "reward", "current_reward", "millis"]);
 var data_timer = { last_time: Date.now(), increment: 100 };
 var target = {};
 var running = false;
@@ -87,17 +88,21 @@ var check_if_times_up = () => {
 
 function push_data() {
     if (Date.now() - data_timer.last_time > data_timer.increment) {
-        data.push([Math.floor(target.x), Math.floor(target.y), mouse.x, mouse.y, Date.now() - target.start_time]);
+        let targetX = Math.floor(target.x);
+        let targetY = Math.floor(target.y);
+        let time = Date.now() - target.start_time;
+        let distance = Math.sqrt(Math.pow(targetX - mouse.x, 2) + Math.pow(targetY - mouse.y, 2))
+        data.push([targetX, targetY, mouse.x, mouse.y, distance, target.reward, target.score, time]);
         data_timer.last_time = Date.now();
     }
 }
 
-var create_circle = (r, spd, task) => {
+var create_circle = (r, spd, task, reward) => {
     let x = between(100, canvas.width - 100);
     let y = between(100, canvas.height - 100);
     let x2 = between(100, canvas.width - 100);
     let y2 = between(100, canvas.height - 100);
-    target = new Target(x, y, 'red', r, { x: x, y: y, r: 10 }, { x: x2, y: y2, r: 10 }, spd, task);
+    target = new Target(x, y, 'red', r, { x: x, y: y, r: 10 }, { x: x2, y: y2, r: 10 }, spd, task, reward);
 }
 
 var update = function () {
@@ -145,19 +150,24 @@ var update = function () {
             debounce_keys.space = Date.now();
         }
     }
-    if (!running) {
-        if (movement.click && collision.detect_cir(mouse, target)) {
-            controls.className = "hidden";
-            running = true;
-            target.start_time = Date.now();
-        }
-    } else {
+    if (running) {
         if (movement.click && collision.detect_cir(mouse, target) && target.task === 2) {
             controls.className = "hidden";
             target.x = between(100, canvas.width - 100);
             target.y = between(100, canvas.height - 100);
-            success_bar.update(-canvas.height / 50);
+            success_bar.update((-canvas.height / 50) * target.reward);
+            target.update_score(target.reward);
             target.time = Date.now();
+            console.log("running hit", target.speed, target.max_time);
+        }
+    } else {
+        if (movement.click && collision.detect_cir(mouse, target)) {
+            controls.className = "hidden";
+            target.start_time = Date.now();
+            if (target.task === 2) target.speed = 0;
+            running = true;
+            target.time = Date.now();
+            console.log("non running hit", target.speed, target.max_time);
         }
     }
 }
@@ -179,12 +189,15 @@ var run_task1 = () => {
 
     if (running) {
         push_data();
+        target.draw_score(context, canvas);
         if (collision.detect_cir(target, mouse)) {
-            success_bar.update(-canvas.height / 1000);
+            success_bar.update((-canvas.height / 1000) * target.reward);
+            target.update_score(target.reward / 5);
             target.col = 'green';
         }
         else {
-            success_bar.update(canvas.height / 1000);
+            success_bar.update((canvas.height / 1000) * target.reward);
+            target.update_score(-target.reward / 5);
             target.col = 'red';
         }
         target.move();
@@ -205,18 +218,18 @@ var run_task2 = () => {
     context.clearRect(0, 0, canvas.width, canvas.height);
     if (show_reward) success_bar.draw(context);
     target.draw(context);
-
+    target.draw_score(context, canvas);
     draw_text(["Press space to pause/show controls."]);
     update();
     if (running) {
-        {
-            push_data();
-            if (target.speed >= target.max_time) {
-                target.x = between(100, canvas.width - 100);
-                target.y = between(100, canvas.height - 100);
-                success_bar.update(canvas.height / 50);
-                target.time = Date.now();
-            }
+        push_data();
+        if (target.speed >= target.max_time) {
+            target.x = between(100, canvas.width - 100);
+            target.y = between(100, canvas.height - 100);
+            success_bar.update((canvas.height / 50) * target.reward);
+            target.update_score(-target.reward);
+            target.time = Date.now();
+            console.log("times up", target.speed, target.max_time)
         }
     } else {
         target.draw_data(context, canvas);
@@ -242,11 +255,12 @@ function setup_task(task_num) {
     if (show_reward_input.value === 'yes') show_reward = true;
     let size = parseInt(size_input.value) || 30;
     let spd = parseInt(speed_input.value) || 2;
+    let reward = parseInt(reward_input.value) || 11;
     if (task_num === 2) {
         success_bar.update(-canvas.height / 50);
         spd *= 1000;
     }
-    create_circle(size, spd, task_num);
+    create_circle(size, spd, task_num, reward);
     toggle_controls();
 }
 
@@ -254,7 +268,7 @@ function setup_task(task_num) {
 
 task1_button.addEventListener('click', function () {
     setup_task(1);
-    console.log(event);
+    // console.log(event);
     canvas.addEventListener('mousemove', function (event) {
         if (event.region) {
             alert('hit region: ' + event.region);
@@ -267,7 +281,7 @@ task1_button.addEventListener('click', function () {
 task2_button.addEventListener('click', function () {
     setup_task(2);
     canvas.addEventListener('mousemove', function (event) {
-        console.log(event);
+        // console.log(event);
         if (event.region) {
             alert('hit region: ' + event.region);
         }

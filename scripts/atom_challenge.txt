@@ -1,0 +1,31 @@
+function maxFromQueries(n, queries) {
+
+    let max = 0;
+    let arr = [];
+
+    // Push in two key/value pairs for the start and end of the query update.
+    // The value for the second pair is negative to decrement our sum later
+    queries.forEach(query => {
+        arr.push({ key: query[0], val: query[2] });
+        arr.push({ key: query[1], val: -query[2] });
+    });
+
+    // Sort the array by the object keys
+    // Tie goes to the value (keep the negative value toward the end of array)
+    arr.sort((obj1, obj2) => {
+        if (obj1.key === obj2.key)
+            return obj2.val - obj1.val;
+        else
+            return obj1.key - obj2.key;
+    });
+
+    // Sum the values and test for a global maximum
+    let sum = 0;
+    arr.forEach(obj => {
+        sum += obj.val;
+        if (sum > max)
+            max = sum;
+    })
+
+    return max;
+}

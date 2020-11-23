@@ -2,7 +2,7 @@ import Collisions from './collisions.js';
 let collision = new Collisions();
 
 export default class Target {
-    constructor(x, y, color, radius, pt1, pt2, speed, task) {
+    constructor(x, y, color, radius, pt1, pt2, speed, task, reward) {
         this.x = x;
         this.y = y;
         this.col = color;
@@ -15,6 +15,9 @@ export default class Target {
         this.time = 0;
         this.max_time = speed;
         this.start_time = 0;
+        this.reward = reward;
+        this.score = 0;
+        this.current_score = 0;
     }
     translate(x, y) {
         this.x += x;
@@ -54,15 +57,38 @@ export default class Target {
         context.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
         context.stroke();
     }
+    update_score(amount) {
+        this.score += amount;
+        let increment = this.score - this.current_score < 0 ? -1 : 1;
+        let self = this;
+        if (this.score != this.current_score) {
+
+            for (let i = 0; i < Math.abs(this.score - this.current_score); i++) {
+                setTimeout(function () {
+                    self.current_score += increment;
+                }, i * 30);
+            }
+
+        }
+    }
+    draw_score(context, canvas) {
+        context.save();
+        context.font = "30px Arial";
+        let text = "SCORE: " + Math.round(this.current_score);
+        context.fillText(text, canvas.width / 2 - context.measureText(text).width / 2, canvas.height / 20);
+        context.restore();
+    }
     draw_data(context, canvas) {
         context.save();
+        context.font = "20px Arial";
         if (this.task === 2) {
             context.fillText("speed: " + this.max_time / 1000 + " seconds", canvas.width - 400, canvas.height / 20);
-            context.fillText("reward: " + (10 - this.max_time / 1000) + "x", canvas.width - 400, canvas.height / 20 + 20);
+            context.fillText("reward: " + this.reward + "x", canvas.width - 400, canvas.height / 20 + 20);
+            context.fillText("size: " + this.r, canvas.width - 400, canvas.height / 20 + 40);
         }
         else {
             context.fillText("speed: " + this.speed, canvas.width - 400, canvas.height / 20);
-            context.fillText("reward: " + (this.speed + (100 - this.r) / 10) + "x", canvas.width - 400, canvas.height / 20 + 20);
+            context.fillText("reward: " + this.reward + "x", canvas.width - 400, canvas.height / 20 + 20);
             context.fillText("size: " + this.r, canvas.width - 400, canvas.height / 20 + 40);
         }
         context.restore();
