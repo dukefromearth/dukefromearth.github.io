@@ -54,11 +54,16 @@ function updateLiveRegion(liveRegionID, textString) {
 }
 /********************* UTILITIES **********************/
 
+var setFileName = (runtime, size, speed, reward, show_rew) => {
+    let d = new Date();
+    let date = d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate() + "_" + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+    let data = "_runtime:" + runtime + "_size:" + size + "_speed:" + speed + "_reward:" + reward + "_showreward:" + show_rew;
+    export_csv_input.value = date + data;
+}
+
 var between = (min, max) => {
     return Math.random() * (max - min) + min;
 }
-
-const map = (value, x1, y1, x2, y2) => (value - x1) * (y2 - x2) / (y1 - x1) + x2;
 
 var draw_text = function (text_arr) {
     context.fillStyle = 'white';
@@ -274,6 +279,7 @@ function setup_task(task_num) {
         spd *= 1000;
     }
     create_circle(size, spd, task_num, reward);
+    setFileName(runtime_input, size, spd, reward, show_reward);
     toggle_controls();
 }
 
