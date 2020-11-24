@@ -56,7 +56,7 @@ function updateLiveRegion(liveRegionID, textString) {
 
 var setFileName = (runtime, size, speed, reward, show_rew) => {
     let d = new Date();
-    let date = d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate() + "_" + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+    let date = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate() + "_" + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
     let data = "_runtime:" + runtime + "_size:" + size + "_speed:" + speed + "_reward:" + reward + "_showreward:" + show_rew;
     export_csv_input.value = date + data;
 }
