@@ -18,6 +18,8 @@ export default class Target {
         this.reward = reward;
         this.score = 0;
         this.current_score = 0;
+        this.last_update = Date.now();
+        this.update_interval = 1000;
     }
     translate(x, y) {
         this.x += x;
@@ -58,23 +60,26 @@ export default class Target {
         context.stroke();
     }
     update_score(amount) {
-        this.score += amount;
-        let increment = this.score - this.current_score < 0 ? -1 : 1;
+        let ratio = (Date.now() - this.last_update) / this.update_interval;
+        this.score += ratio * amount;
+        let increment = this.score - this.current_score < -1 ? -1 : 1;
         let self = this;
-        if (this.score != this.current_score) {
-
+        if (Math.abs(this.score - this.current_score) > 1) {
             for (let i = 0; i < Math.abs(this.score - this.current_score); i++) {
                 setTimeout(function () {
                     self.current_score += increment;
-                }, i * 30);
+                }, i);
             }
-
+        } else {
+            this.current_score = this.score;
         }
+        this.last_update = Date.now();
     }
     draw_score(context, canvas) {
+        console.log(this.current_score, this.score);
         context.save();
         context.font = "30px Arial";
-        let text = "SCORE: " + Math.round(this.current_score);
+        let text = "SCORE: " + Math.floor(this.current_score);
         context.fillText(text, canvas.width / 2 - context.measureText(text).width / 2, canvas.height / 20);
         context.restore();
     }

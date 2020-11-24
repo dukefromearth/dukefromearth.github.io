@@ -23,7 +23,7 @@ const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 canvas.width = window.innerWidth - 20;
 canvas.height = window.innerHeight - 20;
-var success_bar = new Success_bar(canvas.height - 40, canvas.width - 40);
+var success_bar = new Success_bar(canvas.height - 40, canvas.width - 40, parseInt(runtime_input.value));
 var movement = new input(document, canvas);
 var collision = new Collision();
 var data = [];
@@ -57,6 +57,8 @@ function updateLiveRegion(liveRegionID, textString) {
 var between = (min, max) => {
     return Math.random() * (max - min) + min;
 }
+
+const map = (value, x1, y1, x2, y2) => (value - x1) * (y2 - x2) / (y1 - x1) + x2;
 
 var draw_text = function (text_arr) {
     context.fillStyle = 'white';
@@ -151,12 +153,13 @@ var update = function () {
         }
     }
     if (running) {
-        if (movement.click && collision.detect_cir(mouse, target) && target.task === 2) {
+        if (collision.detect_cir(mouse, target) && target.task === 2) {
             controls.className = "hidden";
             target.x = between(100, canvas.width - 100);
             target.y = between(100, canvas.height - 100);
-            success_bar.update((-canvas.height / 50) * target.reward);
-            target.update_score(target.reward);
+            success_bar.update(-success_bar.update_amount);
+            target.current_score += target.reward;
+            target.score = target.current_score;
             target.time = Date.now();
             console.log("running hit", target.speed, target.max_time);
         }
@@ -164,9 +167,14 @@ var update = function () {
         if (movement.click && collision.detect_cir(mouse, target)) {
             controls.className = "hidden";
             target.start_time = Date.now();
-            if (target.task === 2) target.speed = 0;
+            if (target.task === 2) {
+                target.speed = 0;
+                // target.current_score -= target.reward;
+                // target.score = target.current_score;
+            }
             running = true;
             target.time = Date.now();
+            success_bar.last_update = Date.now();
             console.log("non running hit", target.speed, target.max_time);
         }
     }
@@ -191,13 +199,13 @@ var run_task1 = () => {
         push_data();
         target.draw_score(context, canvas);
         if (collision.detect_cir(target, mouse)) {
-            success_bar.update((-canvas.height / 1000) * target.reward);
-            target.update_score(target.reward / 5);
+            success_bar.update(-success_bar.update_amount * 10 / runtime_input);
+            target.update_score(target.reward, true);
             target.col = 'green';
         }
         else {
-            success_bar.update((canvas.height / 1000) * target.reward);
-            target.update_score(-target.reward / 5);
+            success_bar.update(success_bar.update_amount * 10 / runtime_input);
+            target.update_score(-target.reward, true);
             target.col = 'red';
         }
         target.move();
@@ -221,7 +229,6 @@ var run_task2 = () => {
         target.draw_score(context, canvas)
     }
     target.draw(context);
-
     draw_text(["Press space to pause/show controls."]);
     update();
     if (running) {
@@ -229,9 +236,10 @@ var run_task2 = () => {
         if (target.speed >= target.max_time) {
             target.x = between(100, canvas.width - 100);
             target.y = between(100, canvas.height - 100);
-            success_bar.update((canvas.height / 50) * target.reward);
-            target.update_score(-target.reward);
             target.time = Date.now();
+            success_bar.update(success_bar.update_amount * 10 / runtime_input);
+            target.current_score -= target.reward;
+            target.score = target.current_score;
             console.log("times up", target.speed, target.max_time)
         }
     } else {
@@ -258,9 +266,9 @@ function setup_task(task_num) {
     if (show_reward_input.value === 'yes') show_reward = true;
     let size = parseInt(size_input.value) || 30;
     let spd = parseInt(speed_input.value) || 2;
-    let reward = parseInt(reward_input.value) || 11;
+    let reward = parseInt(reward_input.value) || 1;
     if (task_num === 2) {
-        success_bar.update(-canvas.height / 50);
+        // success_bar.update(-canvas.height / 50);
         spd *= 1000;
     }
     create_circle(size, spd, task_num, reward);
@@ -278,7 +286,6 @@ task1_button.addEventListener('click', function () {
         }
     });
     run_task1();
-
 });
 
 task2_button.addEventListener('click', function () {

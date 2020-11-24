@@ -16,75 +16,76 @@ export default function Listen(document, canvas) {
         return Math.atan2(y - canvas.height / 2, x - canvas.width / 2);
     }
 
-    canvas.addEventListener('touchmove', function (event) {
-        console.log("entered")
+    document.addEventListener('touchmove', function (event) {
         event.preventDefault();
         const touch = event.touches[0];
+        movement.mousex = touch.clientX;
+        movement.mousey = touch.clientY;
         movement.angle = updateDirection(touch.clientX, touch.clientY);
     })
 
-    canvas.addEventListener('touchstart', function (event) {
-        event.preventDefault();
-        const touch = event.touches[0];
-        const direction = updateDirection(touch.clientX, touch.clientY);
-        //right
-        if (direction > -Math.PI / 8 && direction < 0 || direction > 0 && direction < Math.PI / 8) {
-            movement.right = true;
-            movement.down = false;
-            movement.left = false;
-            movement.up = false;
-        }
-        //down right
-        else if (direction > Math.PI / 8 && direction < 3 * Math.PI / 8) {
-            movement.right = true;
-            movement.down = true;
-            movement.left = false;
-            movement.up = false;
-        }
-        //down
-        else if (direction > 3 * Math.PI / 8 && direction < 5 * Math.PI / 8) {
-            movement.right = false;
-            movement.down = true;
-            movement.left = false;
-            movement.up = false;
-        }
-        //down left
-        else if (direction > 5 * Math.PI / 8 && direction < 7 * Math.PI / 8) {
-            movement.right = false;
-            movement.down = true;
-            movement.left = true;
-            movement.up = false;
-        }
-        //left
-        else if (direction < Math.PI && direction > 7 * Math.PI / 8 || direction > -Math.PI && direction < -7 * Math.PI / 8) {
-            movement.right = false;
-            movement.down = false;
-            movement.left = true;
-            movement.up = false;
-        }
-        //up left
-        else if (direction > -7 * Math.PI / 8 && direction < -5 * Math.PI / 8) {
-            movement.right = false;
-            movement.down = false;
-            movement.left = true;
-            movement.up = true;
-        }
-        //up
-        else if (direction > -5 * Math.PI / 8 && direction < -3 * Math.PI / 8) {
-            movement.right = false;
-            movement.down = false;
-            movement.left = false;
-            movement.up = true;
-        }
-        //up right
-        else if (direction > -3 * Math.PI / 8 && direction < -Math.PI / 8) {
-            movement.right = true;
-            movement.down = false;
-            movement.left = false;
-            movement.up = true;
-        }
+    // canvas.addEventListener('touchstart', function (event) {
+    //     event.preventDefault();
+    //     const touch = event.touches[0];
+    //     const direction = updateDirection(touch.clientX, touch.clientY);
+    //     //right
+    //     if (direction > -Math.PI / 8 && direction < 0 || direction > 0 && direction < Math.PI / 8) {
+    //         movement.right = true;
+    //         movement.down = false;
+    //         movement.left = false;
+    //         movement.up = false;
+    //     }
+    //     //down right
+    //     else if (direction > Math.PI / 8 && direction < 3 * Math.PI / 8) {
+    //         movement.right = true;
+    //         movement.down = true;
+    //         movement.left = false;
+    //         movement.up = false;
+    //     }
+    //     //down
+    //     else if (direction > 3 * Math.PI / 8 && direction < 5 * Math.PI / 8) {
+    //         movement.right = false;
+    //         movement.down = true;
+    //         movement.left = false;
+    //         movement.up = false;
+    //     }
+    //     //down left
+    //     else if (direction > 5 * Math.PI / 8 && direction < 7 * Math.PI / 8) {
+    //         movement.right = false;
+    //         movement.down = true;
+    //         movement.left = true;
+    //         movement.up = false;
+    //     }
+    //     //left
+    //     else if (direction < Math.PI && direction > 7 * Math.PI / 8 || direction > -Math.PI && direction < -7 * Math.PI / 8) {
+    //         movement.right = false;
+    //         movement.down = false;
+    //         movement.left = true;
+    //         movement.up = false;
+    //     }
+    //     //up left
+    //     else if (direction > -7 * Math.PI / 8 && direction < -5 * Math.PI / 8) {
+    //         movement.right = false;
+    //         movement.down = false;
+    //         movement.left = true;
+    //         movement.up = true;
+    //     }
+    //     //up
+    //     else if (direction > -5 * Math.PI / 8 && direction < -3 * Math.PI / 8) {
+    //         movement.right = false;
+    //         movement.down = false;
+    //         movement.left = false;
+    //         movement.up = true;
+    //     }
+    //     //up right
+    //     else if (direction > -3 * Math.PI / 8 && direction < -Math.PI / 8) {
+    //         movement.right = true;
+    //         movement.down = false;
+    //         movement.left = false;
+    //         movement.up = true;
+    //     }
 
-    })
+    // })
 
     document.addEventListener("mousemove", function (event) {
         movement.mousex = event.offsetX;
@@ -97,6 +98,14 @@ export default function Listen(document, canvas) {
     });
 
     document.addEventListener("mouseup", function () {
+        movement.click = false;
+    });
+
+    document.addEventListener("touchstart", function () {
+        movement.click = true;
+    })
+
+    document.addEventListener("touchend", function () {
         movement.click = false;
     });
 
