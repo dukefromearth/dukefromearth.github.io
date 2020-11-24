@@ -27,8 +27,8 @@ var success_bar = new Success_bar(canvas.height - 40, canvas.width - 40, parseIn
 var movement = new input(document, canvas);
 var collision = new Collision();
 var data = [];
-data.push(["target.x", "target.y", "mouse.x", "mouse.y", "distance_to_target", "reward", "current_reward", "millis"]);
-var data_timer = { last_time: Date.now(), increment: 100 };
+data.push(["target.x", "target.y", "mouse.x", "mouse.y", "angle_to_target", "target_size", "distance_to_target", "is_in_target", "reward_increment", "current_reward", "millis"]);
+var data_timer = { last_time: Date.now(), increment: 10 };
 var target = {};
 var running = false;
 var show_reward = false;
@@ -93,8 +93,10 @@ function push_data() {
         let targetX = Math.floor(target.x);
         let targetY = Math.floor(target.y);
         let time = Date.now() - target.start_time;
-        let distance = Math.sqrt(Math.pow(targetX - mouse.x, 2) + Math.pow(targetY - mouse.y, 2))
-        data.push([targetX, targetY, mouse.x, mouse.y, distance, target.reward, target.score, time]);
+        let distance = Math.round(Math.sqrt(Math.pow(targetX - mouse.x, 2) + Math.pow(targetY - mouse.y, 2)));
+        let is_in_target = distance < target.r ? true : false;
+        let angle = Math.atan2(targetY - mouse.y, targetX - mouse.x) * 180 / Math.PI;
+        data.push([targetX, targetY, mouse.x, mouse.y, angle, target.r, distance, is_in_target, target.reward, target.score, time]);
         data_timer.last_time = Date.now();
     }
 }
